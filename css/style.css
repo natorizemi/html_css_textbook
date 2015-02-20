@@ -1,0 +1,88 @@
+@charset "UTF-8";
+/* CSS Document */
+
+body{
+  background-color:#F5F2A5;
+}
+
+#containter{
+  width:1160px;
+  margin:0 auto;
+  background-color:#ffffff  ;
+  padding:10px 20px;
+}
+
+.logo{
+ width:636px;
+ height:200px;
+ background-image:url(../img/img_01.gif);
+ margin:0 auto;
+}
+
+hr{
+  clear:left;
+}
+
+#globalnavi{  
+  margin: 0;  
+  padding: 0;  
+  width: 1160px;
+}  
+  
+#globalnavi ul{  
+  list-style-type: none;  
+  margin: 0;  
+  padding: 0;  
+}  
+  
+#globalnavi li{  
+  float: left;  
+  width: 230px;  
+  margin: 0;  
+  padding: 0;  
+}  
+  
+#globalnavi a{  
+  text-align: center;  
+  display:block;  
+  padding: 0.5em 0;  
+  width:100%;  
+  background: url(画像のパス) no-repeat 0 50%;  
+  color:#000000;  
+}  
+  
+#globalnavi a:hover{  
+  background: url(画像のパス) no-repeat -100px 50%;  
+  color: #ffffff;  
+}  
+.wordcloud{
+  width:830px;
+  height:400px;
+  background-image:url(../img/calicon09.jpg);
+  margin:50px auto;
+}
+
+.ranking{
+  width:380px;
+  height:400px;
+  float:left;
+  margin-top:50px;
+  border:dotted 10px;
+  margin-right:40px;
+  margin-bottom:50px;
+}
+
+.gian{
+  width:700px;
+  height:400px;
+  float:left;
+  margin-top:50px;
+  border:dotted 10px;
+}
+
+.people{
+  width:1120px;
+  height:300px;
+   margin-top:50px;
+  border:dotted 10px;
+  }
