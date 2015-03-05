@@ -1,0 +1,33 @@
+<!-- 人物情報 -->
+<?php
+//データベース接続
+require_once 'db_imfo.php';
+$mysqli = new mysqli($db["host"],$db["user"],$db["pass"]);
+	if ($mysqli->connect_errno) {
+	print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
+	exit();
+}
+$mysqli->select_db("2014");
+?>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Document</title>
+	</head>
+	<body>
+		<!-- ジャンプする目標のためのid -->
+		<p id="people_info">人物情報</p>
+		<?php
+		// 選択させた議員の情報をデータベースから出力している。
+		$query = "SELECT ID from person_giin where name IN('"  .$_POST['people'].  "')";
+		$result = $mysqli->query($query);
+		if ($result = $mysqli->query($query)) {
+		/* 連想配列を取得します */
+		while ($row = $result->fetch_assoc()) {
+		printf ("%s\n", $row["ID"]);
+		}
+		}
+		?>
+	</body>
+</html>

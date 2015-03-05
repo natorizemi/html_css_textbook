@@ -5,7 +5,7 @@ body{
   background-color:#ffffff;
 }
 
-#containter{
+.containter{
   width:1160px;
   margin:0 auto;
   background-color:#ffffff;
@@ -13,12 +13,15 @@ body{
   }
 
 
-
 .logo{
  width:636px;
  height:200px;
  background-image:url('../img/logo.gif');
  margin:0 auto;
+}
+
+hr{
+  clear:left;
 }
 
 hr{
@@ -57,34 +60,34 @@ hr{
   background: url(画像のパス) no-repeat -100px 50%;  
   color: #ffffff;  
 }  
-.wordcloud{
-  width:830px;
+
+
+
+.first{
+  width:800px;
   height:400px;
+  /*
   background-image:url('../img/wordcloud.jpg');
-  margin:50px auto;
+  */
+  margin-left: 200px;
 }
 
-.ranking{
-  width:380px;
+.agenda{
+  width:800px;
   height:400px;
-  float:left;
-  margin-top:50px;
-  border:dotted 10px;
-  margin-right:40px;
-  margin-bottom:50px;
+  /*
+  background-image:url('../img/wordcloud.jpg');
+  */
+  margin-left: 200px;
 }
 
-.gian{
-  width:700px;
+.people_info{
+  width:800px;
   height:400px;
-  float:left;
-  margin-top:50px;
-  border:dotted 10px;
+  /*
+  background-image:url('../img/wordcloud.jpg');
+  */
+  margin-left: 200px;
+}
 }
 
-.people{
-  width:1120px;
-  height:300px;
-   margin-top:50px;
-  border:dotted 10px;
-  }
