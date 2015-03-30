@@ -23,16 +23,74 @@ $mysqli->set_charset("utf8");
 	<body>
 		<!-- ジャンプする目標のためのid -->
 		<p id="people_info">人物情報</p>
+		
 		<?php
-		// 選択させた議員の情報をデータベースから出力している。
-		$query = "SELECT id_people_info from people_info where name IN('"  .$_POST['people'].  "')";
+		print $_POST['people'];
+		print "<br>";
+		?>
+
+
+		<p id="people_info">発言した議案</p>
+
+		<?php
+		// 議員IDの取得
+		$query = "SELECT * from people_info where name IN('"  .$_POST['people'].  "')";
 		$result = $mysqli->query($query);
 		if ($result = $mysqli->query($query)) {
 		/* 連想配列を取得します */
-		while ($row = $result->fetch_assoc()) {
-		printf ("%s\n", $row["id_people_info"]);
+			while ($row = $result->fetch_assoc()) {
+			$people_id = $row["id_people_info"];
+			}
 		}
+
+
+
+		// 議案IDの取得
+		$i=0;
+		$query_proxy = "SELECT DISTINCT `proxy_statement_id_proxy_statement` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  "";
+		$result_proxy = $mysqli->query($query_proxy);
+		if ($result_proxy = $mysqli->query($query_proxy)){
+		/* 連想配列を取得します */
+			
+			while ($row_proxy = $result_proxy->fetch_assoc()) {
+			/*
+			printf ("%s\n", $row_proxy["proxy_statement_id_proxy_statement"]);
+			*/
+
+			$proxy_id[$i] = $row_proxy["proxy_statement_id_proxy_statement"];
+			$i ++;
+			}
 		}
+		
+		// 議案の取得
+		foreach ($proxy_id as $proxy_id_2){
+			$query_proxy_datail = "SELECT `detail` FROM `proxy_statement` WHERE `id_proxy_statement` = "  .$proxy_id_2.  "";
+			$result_proxy_detail = $mysqli->query($query_proxy_datail);
+			if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
+			/* 連想配列を取得します */
+				while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
+				printf ("%s\n", $row_proxy_detail["detail"]);
+				print "<br>";
+				}
+		}
+
+
+  		}
+
+
+
+		//発言内容の取得
+		$query2 = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  "";
+		$result2 = $mysqli->query($query2);
+		if ($result2 = $mysqli->query($query2)){
+		/* 連想配列を取得します */
+			while ($row2 = $result2->fetch_assoc()) {
+			printf ("%s\n", $row2["detail"]);
+			}
+		}
+	
+
+
 		?>
 	</body>
 </html>
