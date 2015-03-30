@@ -1,5 +1,8 @@
 <!-- 議員リスト -->
 
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -15,12 +18,13 @@
 			exit();
 		}
 		// 議員情報をデータベースから出力
-		$mysqli->select_db("2014");
-		$query = "SELECT name FROM person_giin";
+		$mysqli->select_db("natori_web");
+		$query = "SELECT name FROM people_info";
 		if ($result = $mysqli->query($query)) {
 		echo '<form action="people_info.html#people_info" method="post" target="people_info">';
 		/* 連想配列を取得します */
 		while ($row = $result->fetch_assoc()) {
+		$row['name'] = mb_convert_encoding($row['name'],"utf-8");
 		echo '<p>';
 		echo '<input type="radio" name="people" value="';
 		echo $row['name'];
