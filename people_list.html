@@ -3,7 +3,8 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8">
 		<title>Document</title>
@@ -16,14 +17,16 @@
 			print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
 			exit();
 		}
+		//文字化け対策
+		$mysqli->set_charset("utf8");
+
 		// 議員情報をデータベースから出力
 		$mysqli->select_db("natori_web");
-		$query = "SELECT name FROM people_info";
+		$query = "SELECT `name` FROM `people_info` WHERE `id_people_info` >1";
 		if ($result = $mysqli->query($query)) {
 		echo '<form action="people_info.html#people_info" method="post" target="people_info">';
 		/* 連想配列を取得します */
 		while ($row = $result->fetch_assoc()) {
-		$row['name'] = mb_convert_encoding($row['name'],"utf-8");
 		echo '<p>';
 		echo '<input type="radio" name="people" value="';
 		echo $row['name'];
@@ -43,6 +46,7 @@
 		echo '</form>';
 		
 		}
+		$mysqli->close();
 		?>
 	</body>
 </html>
