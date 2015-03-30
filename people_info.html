@@ -7,10 +7,15 @@ $mysqli = new mysqli($db["host"],$db["user"],$db["pass"]);
 	print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
 	exit();
 }
-$mysqli->select_db("2014");
+$mysqli->select_db("natori_web");
+//文字化け対策
+$mysqli->set_charset("utf8");
+
 ?>
+
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 	<head>
 		<meta charset="UTF-8">
 		<title>Document</title>
@@ -20,12 +25,12 @@ $mysqli->select_db("2014");
 		<p id="people_info">人物情報</p>
 		<?php
 		// 選択させた議員の情報をデータベースから出力している。
-		$query = "SELECT ID from person_giin where name IN('"  .$_POST['people'].  "')";
+		$query = "SELECT id_people_info from people_info where name IN('"  .$_POST['people'].  "')";
 		$result = $mysqli->query($query);
 		if ($result = $mysqli->query($query)) {
 		/* 連想配列を取得します */
 		while ($row = $result->fetch_assoc()) {
-		printf ("%s\n", $row["ID"]);
+		printf ("%s\n", $row["id_people_info"]);
 		}
 		}
 		?>
