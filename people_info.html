@@ -62,34 +62,86 @@ $mysqli->set_charset("utf8");
 			}
 		}
 		
-		// 議案の取得
-		foreach ($proxy_id as $proxy_id_2){
-			$query_proxy_datail = "SELECT `detail` FROM `proxy_statement` WHERE `id_proxy_statement` = "  .$proxy_id_2.  "";
+
+
+		// 発言した議案の取得
+		$i=0;
+		$k=0;
+		if(isset($proxy_id)){
+			foreach ($proxy_id as $proxy_id_2){
+			$query_proxy_datail = "SELECT `detail` FROM `proxy_statement` WHERE	`id_proxy_statement` = "  .$proxy_id_2.  "";
 			$result_proxy_detail = $mysqli->query($query_proxy_datail);
-			if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
-			/* 連想配列を取得します */
-				while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
-				printf ("%s\n", $row_proxy_detail["detail"]);
-				print "<br>";
+				if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
+					while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
+					printf ("【%s\n】", $row_proxy_detail["detail"]);
+					print "<br>";
+					}
+			// 発言内容の取得
+					$query_hatugen = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  " AND `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  " ";
+					$result_haturen = $mysqli->query($query_hatugen);
+					if ($result_haturen = $mysqli->query($query_hatugen)){
+						while ($row_hatugen = $result_haturen->fetch_assoc()) {
+							printf ("%s\n", $row_hatugen["detail"]);
+							print "<br>";
+							print "<br>";
+
+
+
+							// 答弁内容の取得
+							$query_answer = "SELECT `id_hatugen` FROM `hatugen` WHERE `people_info_id_people_info` =  "  .$people_id.  " and `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  "";
+							$result_answer = $mysqli->query($query_answer);
+							if ($result_answer = $mysqli->query($query_answer)){
+								while ($row_answer = $result_answer->fetch_assoc()) {
+									$hatugen_id[$i] = $row_answer["id_hatugen"] +1;
+									$hatugen_id[$i+1] = "stop";
+									$i++;
+									/*
+								printf ("%s\n", $row_answer["id_hatugen"]);
+								*/
+							
+								}
+								// 答弁内容の表示。
+								$query_answer_detail = "SELECT `detail` FROM `hatugen` WHERE `id_hatugen`="  .$hatugen_id[$k].  "";
+								$result_answer_detail = $mysqli->query($query_answer_detail);
+
+								if($hatugen_id[$k+1] != "stop"){
+									if ($result_answer_detail = $mysqli->query($query_answer_detail)){
+										while ($row_answer_detail = $result_answer_detail->fetch_assoc()) {
+											printf ("【answer:】%s\n", $row_answer_detail["detail"]);
+											print "<br>";
+											print "<br>";
+										}
+									}
+								}
+								$k++;
+								//配列の初期化
+								$i=0;
+								$hatugen_id = array();
+							}
+						}
+					}
 				}
+			}
+		}
+		else{
+			print("発言議案なし");
 		}
 
 
-  		}
-
-
-
-		//発言内容の取得
+  		/*
+		発言内容の取得
 		$query2 = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  "";
 		$result2 = $mysqli->query($query2);
 		if ($result2 = $mysqli->query($query2)){
-		/* 連想配列を取得します */
 			while ($row2 = $result2->fetch_assoc()) {
 			printf ("%s\n", $row2["detail"]);
 			}
 		}
-	
+		*/
 
+			
+		
+	
 
 		?>
 	</body>
