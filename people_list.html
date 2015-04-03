@@ -11,7 +11,7 @@
 	</head>
 	<body>
 		<?php
-		require_once 'db_imfo.php';
+		require_once 'db_imfo.php';	
 		$mysqli = new mysqli($db["host"],$db["user"],$db["pass"]);
 			if ($mysqli->connect_errno) {
 			print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
