@@ -1,3 +1,19 @@
+<?php
+//データベース接続
+require_once 'db_imfo.php';
+$mysqli = new mysqli($db["host"],$db["user"],$db["pass"]);
+	if ($mysqli->connect_errno) {
+	print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
+	exit();
+}
+$mysqli->select_db("natori_web");
+//文字化け対策
+$mysqli->set_charset("utf8");
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +22,19 @@
 </head>
 <body>
 "老人ホーム"にまつわる議案
+
+<?php
+$query = "SELECT `detail` FROM `proxy_statement` WHERE `detail` LIKE '%老人ホーム%'";
+		$result = $mysqli->query($query);
+		if ($result = $mysqli->query($query)) {
+		/* 連想配列を取得します */
+			while ($row = $result->fetch_assoc()) {
+			print "<br>";
+			printf ("【%s\n】", $row["detail"]);
+
+			}
+		}
+?>
 
 </body>
 </html>
