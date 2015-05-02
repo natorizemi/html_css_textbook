@@ -74,8 +74,24 @@ $mysqli->set_charset("utf8");
 				if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
 					while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
 					printf ("【%s\n】", $row_proxy_detail["detail"]);
-					print "<br>";
+
+					//賛否情報の取得
+						$query_proxy_vote ="SELECT `proxy_statement_conference_info_id_conference_info` FROM `people_info_has_proxy_statement` WHERE `people_info_id_people_info` =".$people_id. " and  `proxy_statement_id_proxy_statement` ="  .$proxy_id_2. "";
+						$result_proxy_vote = $mysqli->query($query_proxy_vote);
+						if ($result_proxy_vote = $mysqli->query($query_proxy_vote)){
+							while ($row_proxy_vote = $result_proxy_vote->fetch_assoc()) {
+								printf ("賛成or反対：%s\n", $row_proxy_vote["proxy_statement_conference_info_id_conference_info"]);
+								print "<br>";
+							}
+						}
+
+
+
+
 					}
+
+		//賛否情報の取得
+
 			// 発言内容の取得
 					$query_hatugen = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  " AND `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  " ";
 					$result_haturen = $mysqli->query($query_hatugen);
