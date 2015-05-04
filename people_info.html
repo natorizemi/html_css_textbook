@@ -23,14 +23,11 @@ $mysqli->set_charset("utf8");
 	<body>
 		<!-- ジャンプする目標のためのid -->
 		<p id="people_info">人物情報</p>
-		
 		<?php
 		print $_POST['people'];
 		print "<br>";
 		?>
 
-
-		<p id="people_info">発言した議案</p>
 
 		<?php
 		// 議員IDの取得
@@ -42,6 +39,20 @@ $mysqli->set_charset("utf8");
 			$people_id = $row["id_people_info"];
 			}
 		}
+
+		//年間の議会での発言回数の取得
+		$query_question_count="SELECT COUNT(`people_info_id_people_info`) from hatugen where `people_info_id_people_info` = " .$people_id. "";
+		$result_question_count = $mysqli->query($query_question_count);
+		if ($result_question_count = $mysqli->query($query_question_count)){
+			while ($row_question_count = $result_question_count->fetch_assoc()) {
+				printf ("年間の議会での質問回数：%s\n", $row_question_count["COUNT(`people_info_id_people_info`)"]);
+				print "<br>";
+			}
+		}
+
+		print "発言した議案";
+		print "<br>";
+
 
 
 
@@ -74,6 +85,8 @@ $mysqli->set_charset("utf8");
 				if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
 					while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
 					printf ("【%s\n】", $row_proxy_detail["detail"]);
+					print "<br>";
+
 
 					//賛否情報の取得
 						$query_proxy_vote ="SELECT `proxy_statement_conference_info_id_conference_info` FROM `people_info_has_proxy_statement` WHERE `people_info_id_people_info` =".$people_id. " and  `proxy_statement_id_proxy_statement` ="  .$proxy_id_2. "";
@@ -84,13 +97,8 @@ $mysqli->set_charset("utf8");
 								print "<br>";
 							}
 						}
-
-
-
-
 					}
 
-		//賛否情報の取得
 
 			// 発言内容の取得
 					$query_hatugen = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  " AND `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  " ";
