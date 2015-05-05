@@ -22,9 +22,9 @@ $mysqli->set_charset("utf8");
 	</head>
 	<body>
 		<!-- ジャンプする目標のためのid -->
-		<p id="people_info">人物情報</p>
+		<p id="people_info">〜議員詳細情報〜</p>
 		<?php
-		print $_POST['people'];
+		print "名前：".$_POST['people'];
 		print "<br>";
 		?>
 
@@ -71,9 +71,7 @@ $mysqli->set_charset("utf8");
 			$proxy_id[$i] = $row_proxy["proxy_statement_id_proxy_statement"];
 			$i ++;
 			}
-		}
-		
-
+		};
 
 		// 発言した議案の取得
 		$i=0;
@@ -85,7 +83,38 @@ $mysqli->set_charset("utf8");
 				if ($result_proxy_detail = $mysqli->query($query_proxy_datail)){
 					while ($row_proxy_detail = $result_proxy_detail->fetch_assoc()) {
 					printf ("【%s\n】", $row_proxy_detail["detail"]);
-					print "<br>";
+
+
+					//議案の分野習得
+					$x=0;
+					$query_field = "SELECT `id_hatugen` FROM `hatugen` WHERE `people_info_id_people_info` =  "  .$people_id.  " and `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  "";
+						$result_field = $mysqli->query($query_field);
+							if ($result_field = $mysqli->query($query_field)){
+								while ($row_field = $result_field->fetch_assoc()) {
+									$field_id[$x] = $row_field["id_hatugen"] +1;
+									$field_id[$x+1] = "stop";
+									$x++;
+								}
+							}
+					//答弁者番号の取得
+					$query_field_people=" SELECT `people_answer_info_id_people_answer_info` FROM `hatugen` WHERE `id_hatugen` = ".$field_id[0]."";
+					$result_field_people = $mysqli->query($query_field_people);
+					if ($result_field_people = $mysqli->query($query_field_people)) {
+						while ($row_field_people = $result_field_people->fetch_assoc()) {
+						$field_people_id = $row_field_people["people_answer_info_id_people_answer_info"];
+						}
+					}
+					//分野の抽出
+					$query_field_name="SELECT `field` FROM `people_answer_info` WHERE `id_people_answer_info` =".$field_people_id."";
+					$result_field_name = $mysqli->query($query_field_name);
+					if ($result_field_name = $mysqli->query($query_field_name)) {
+						while ($row_field_name = $result_field_name->fetch_assoc()) {
+						$field_people_name = $row_field_name["field"];
+						printf ("議論分野：%s\n　　", $row_field_name["field"]);
+						}
+					}
+					
+
 
 
 					//賛否情報の取得
@@ -98,8 +127,6 @@ $mysqli->set_charset("utf8");
 							}
 						}
 					}
-
-
 			// 発言内容の取得
 					$query_hatugen = "SELECT `detail` FROM `hatugen` WHERE `people_info_id_people_info` = "  .$people_id.  " AND `proxy_statement_id_proxy_statement` = "  .$proxy_id_2.  " ";
 					$result_haturen = $mysqli->query($query_hatugen);
@@ -119,10 +146,7 @@ $mysqli->set_charset("utf8");
 									$hatugen_id[$i] = $row_answer["id_hatugen"] +1;
 									$hatugen_id[$i+1] = "stop";
 									$i++;
-									/*
-								printf ("%s\n", $row_answer["id_hatugen"]);
-								*/
-							
+									
 								}
 								// 答弁内容の表示。
 								$query_answer_detail = "SELECT `detail` FROM `hatugen` WHERE `id_hatugen`="  .$hatugen_id[$k].  "";
