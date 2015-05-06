@@ -5,7 +5,28 @@
 	<title>Document</title>
 </head>
 <body>
-<li><a href="selected_proxy.html" target="agenda">老人ホーム</a></li>
 <img src="img/wordcloud.jpg" alt="サンプル" width="825" height="482">
+
+<?php
+$word="老人ホーム";
+echo '<form action="selected_proxy.html#agenda" method="post" target="agenda">';
+echo '<p>';
+echo '<input type="radio" name="people" value="';
+echo $word;
+echo '">';
+printf ("%s\n", $word);
+echo '</p>';
+echo '<p>';
+echo '<input type="submit" value="送信する">';
+echo '</p>';
+$home="word";
+echo '<input type="hidden" name="home" value="';
+echo $home;
+echo '">';
+echo '</form>';
+?>
+
+
+
 </body>
 </html>

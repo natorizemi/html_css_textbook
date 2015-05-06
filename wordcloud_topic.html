@@ -1,3 +1,19 @@
+<?php
+//データベース接続
+require_once 'db_imfo.php';
+$mysqli = new mysqli($db["host"],$db["user"],$db["pass"]);
+	if ($mysqli->connect_errno) {
+	print('<p>データベースへの接続に失敗しました。</p>' . $mysqli->connect_error);
+	exit();
+}
+$mysqli->select_db("natori_web");
+//文字化け対策
+$mysqli->set_charset("utf8");
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,19 +21,34 @@
 	<title>Document</title>
 </head>
 <body>
-	<ul>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		<li>wordcloud</li>
-		
-	</ul>
+	<?php
+
+	print"関心のある分野を選択してください。";
+	print "<br>";
+
+
+	$query = "SELECT DISTINCT `field` FROM `people_answer_info` WHERE `id_people_answer_info` >3";
+		$result = $mysqli->query($query);
+		if ($result = $mysqli->query($query)) {
+		/* 連想配列を取得します */
+			while ($row = $result->fetch_assoc()) {
+		echo '<form action="selected_proxy.html#agenda" method="post" target="agenda">';
+			echo '<p>';
+			echo '<input type="radio" name="people" value="';
+			echo $row['field'];
+			echo '">';
+			printf ("%s\n", $row["field"]);
+			echo '</p>';
+			}
+		echo '<p>';
+		echo '<input type="submit" value="送信する">';
+		echo '</p>';
+		$home="topic";
+		echo '<input type="hidden" name="home" value="';
+		echo $home;
+		echo '">';
+		echo '</form>';
+		}
+	?>
 </body>
 </html>

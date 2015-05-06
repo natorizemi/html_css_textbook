@@ -21,9 +21,17 @@ $mysqli->set_charset("utf8");
 	<title>Document</title>
 </head>
 <body>
-"老人ホーム"にまつわる議案
+
+
+
+
 
 <?php
+
+//リンク元の特定
+$home = $_POST['home'];
+print $home;
+
 $query = "SELECT `detail` FROM `proxy_statement` WHERE `detail` LIKE '%老人ホーム%'";
 		$result = $mysqli->query($query);
 		if ($result = $mysqli->query($query)) {
