@@ -110,7 +110,7 @@ $mysqli->set_charset("utf8");
 					if ($result_field_name = $mysqli->query($query_field_name)) {
 						while ($row_field_name = $result_field_name->fetch_assoc()) {
 						$field_people_name = $row_field_name["field"];
-						printf ("議論分野：%s\n　　", $row_field_name["field"]);
+						printf ("政策分野：%s\n　　", $row_field_name["field"]);
 						}
 					}
 					
